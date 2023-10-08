@@ -1,0 +1,53 @@
+import java.util.Scanner;
+
+class WordCounters {
+    public static int countWords(String input) {
+        // Split the input string into words based on spaces
+        String[] words = input.trim().split("\\s+");
+        
+        return words.length;
+    }
+    
+    public static int countUniqueWords(String input) {
+        String[] words = input.trim().split("\\s+");
+
+        // Array to store whether a word has been encountered before
+        int[] encountered = new int[words.length];
+
+        int uniqueCount = 0;
+
+        for (int i = 0; i < words.length; i++) {
+            if (encountered[i] == 0) {
+                uniqueCount++;
+                encountered[i] = 1;
+                
+                for (int j = i + 1; j < words.length; j++) {
+                    if (words[i].equalsIgnoreCase(words[j])) {
+                        encountered[j] = 1;
+                    }
+                }
+            }
+        }
+
+        return uniqueCount;
+    }
+}
+public class WordCounter {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter a sentence:");
+        String input = scanner.nextLine();
+        if (input.isEmpty()) {
+            System.out.println("Input is empty. Please enter a sentence.");
+            return;
+        }
+
+        // Call the countWords method from WordCounters and display the word count
+        int wordCount = WordCounters.countWords(input);
+        System.out.println("Total Words: " + wordCount);
+        
+        int uniqueWordCount = WordCounters.countUniqueWords(input);
+        System.out.println("Total Unique Words: " + uniqueWordCount);
+	}
+
+}
